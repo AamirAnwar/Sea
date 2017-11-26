@@ -91,11 +91,43 @@ void swapNode(int i, int j, Node* head) {
 
 }
 
-Node* sortList(Node *head) {
-	if (head->next == NULL) {return head;}
-	printList(head);
-	Node *node = sortList(head->next);
-	return node;
+
+
+Node *reverseLinkedList(Node *head) {
+
+	if (head == NULL) {
+		return head;
+	}
+	
+	Node *prev = NULL, *next = head;
+	
+	while(head != NULL) {
+		next = head->next;
+		head->next = prev;
+		prev = head;
+		head = next;
+	}
+	return prev;	
+}
+
+void recursiveReverse(Node **head) {
+	Node *first;
+	Node *rest;
+
+	if (*head == NULL) {return;}
+	first = *head;
+	rest = first->next;
+
+
+	if (rest == NULL) {return;}
+
+	recursiveReverse(&rest);
+	printList(rest);
+
+	first->next->next = first;
+	first->next = NULL;
+
+	*head = rest;
 }
 
 int main(void) {

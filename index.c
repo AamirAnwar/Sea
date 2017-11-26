@@ -25,39 +25,66 @@ Node* createNode(int value, struct Node *head) {
 	return newNode;
 }
 
-int addWithCarry(Node *head) {
-	if (!head) {return 1;}
-	head->value = head->value + addWithCarry(head->next);
-	int total = head->value;
-
-
-	head->value = head->value%10;
-	return total/10;
-}
-
-Node* addOne(Node* head) {
-	int carry = addWithCarry(head);
-	if (carry) {
-		Node* newNode = createNode(carry, NULL);
-		newNode->next = head;
-		head = newNode;
-	}
+Node *createLL(int headValue) {
+	Node* head= createNode(headValue, NULL);
+	createNode(2, head);
+	createNode(3, head);
+	createNode(4, head);
+	createNode(5, head);	
 	return head;
 }
 
+Node *reverseLinkedList(Node *head) {
+
+	if (head == NULL) {
+		return head;
+	}
+	
+	Node *prev = NULL, *next = head;
+	
+	while(head != NULL) {
+		next = head->next;
+		head->next = prev;
+		prev = head;
+		head = next;
+	}
+	return prev;	
+}
+
+void recursiveReverse(Node **head) {
+	Node *first;
+	Node *rest;
+
+	if (*head == NULL) {return;}
+	first = *head;
+	rest = first->next;
+
+
+	if (rest == NULL) {return;}
+
+	recursiveReverse(&rest);
+	printList(rest);
+
+	first->next->next = first;
+	first->next = NULL;
+
+	*head = rest;
+
+
+
+}
+
+
 int main(void) {
-	Node* head= createNode(9, NULL);
-	int i=1;
-
-	createNode(9, head);
-	createNode(9, head);
-	createNode(9, head);
-	createNode(9, head);
-
+	Node* head= createLL(1);
+	printf("%s\n", "Printing Original List");
 	printList(head);
-	head = addOne(head);
-	printList(head);
+	printf("\n");
+	recursiveReverse(&head);
+	// printList(head);
 
+
+	
 
 	return 0;
 }
