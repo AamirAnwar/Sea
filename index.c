@@ -1,83 +1,157 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct Node {
+	int data;
+	struct Node *left;
+	struct Node *right;
+} Node;
+Node* insertInTree(Node *root,int data);
 
 
-
-
-void swap(int *x, int *y) {
-	int temp = *x;
-	*x = *y;
-	*y = temp;
+Node* createNode(int data) {
+	Node *root = (Node *)malloc(sizeof(Node));
+	root->data = data;
+	root->left = NULL;
+	root->right = NULL;
+	return root;
 }
 
-int partition(int l, int r, int *a) {
-	if (l>=r) {return r;} 
+Node* createTree(int data) {
+	Node *root = createNode(data);
+	// srand(time(NULL));
+	// for (int i = 0; i < 10; ++i) {
+	// 	int r = rand()%100;
+	// 	insertInTree(root, r);
+	// }
 
-	int m = (r-l)/2 + l;
-	int pivot = a[m];
+	insertInTree(root, 10);
+	insertInTree(root, 5);
+	insertInTree(root, 17);
+	insertInTree(root, 1);
+	insertInTree(root, 8);
 
-	printf("Using %d as the pivot \n", pivot);
-	swap(&a[0], &a[m]);
+	insertInTree(root, 30);
+	insertInTree(root, 25);
+	insertInTree(root, 40);
+	insertInTree(root, 22);
+	insertInTree(root, 27);
+	insertInTree(root, 35);
+	insertInTree(root, 50);
 
-	int i = l+1;
-	
-	for (int j = i+1; j<=r; j++) {
-		if (a[j] >= pivot) {continue;}
-		else {
-			printf("Swapping %d at index %d with %d at index %d\n",a[i+1],i+1 ,a[j], j);
-			if (a[i] < pivot) {
-				swap(&a[i+1], &a[j]);
-			}
-			else {
-				swap(&a[i], &a[j]);	
-			}
-			i++;
-		}
+	return root;
+}
+
+Node* insertInTree(Node *root,int data) {
+	if (!root) {
+		return createNode(data);
 	}
 
-	if (a[i] > pivot) {
-		swap(&a[0], &a[i - 1]);
-		return i-1;
+	if (data < root->data) {
+		root->left = insertInTree(root->left, data);
 	}
 	else {
-		swap(&a[0], &a[i]);
-		return i;
+		root->right = insertInTree(root->right, data);
 	}
 
+	return root;
+
+}
+
+void inorderTraversal(Node *root) {
+	if (root) {
+		// printf("%d -> ", root->data);
+		inorderTraversal(root->left);
+		printf("%d -> ", root->data);
+		inorderTraversal(root->right);
+	}
+}
+
+// Queue implementation
+
+typedef struct queue {
+	Node *array[400];
+	int capacity;
+	int end;
+	int front;
+
+}Queue;
+
+Queue* createQueue(int capacity) {
+	Queue *q = (Queue *)malloc(sizeof(Queue));
+	q->capacity = capacity;
+	// q->array = (Node *)malloc(sizeof(Node)*2*capacity);
+	q->end = -1;
+	q->front = 0;
+	return q;
+}
+
+void enqueue(Node *data, Queue *q) {
+	// printf("Queuing - %d\n", data->data);
+	q->end++;
+	q->array[q->end] = data;
+}
+
+void dequeue(Queue *q) {
+
+
+	if (q->front <= q->end) {
+		printf("Dequeued %d\n", q->array[q->front]->data);
+		q->front++;
+	}
 
 
 }
 
-void quicksort(int l, int r, int *a) {
-	if ( l>=r ) {
-		printf("L is greater than R!\n");
+void printQueue(Queue *q) {
+	printf("Front %d End %d\n",q->front, q->end);
+	for (int i = q->front; i <= q->end; i++) {
+		printf("%d - ", q->array[i]->data);
+	}
+	printf("\n");
+}
+
+Queue *globalQueue;
+
+void BFS(Node *root) {
+	if (!root) {
 		return;
 	}
+	if (root->left == NULL && root->right == NULL) {
+		// dequeue(globalQueue);
+		// return;
+	}
 
-	int paritionIndex = partition(l,r,a);
-	printf("paritionIndex - %d\n", paritionIndex);
-	quicksort(0, paritionIndex - 1, a);
-	quicksort(paritionIndex + 1, r, a);
+	if (root->left) {
+		enqueue(root->left, globalQueue);
+	}
+
+	if (root->right) {
+		enqueue(root->right, globalQueue);
+	}
+	// printQueue(globalQueue);
+	dequeue(globalQueue);
+	// printQueue(globalQueue);
+	BFS(globalQueue->array[globalQueue->front]);
+	
 
 }
-
-void printArray(int *a, int size) {
-	for(int i=0;i<size;i++){printf("%d ", a[i]);}
-	printf("\n");
-
-}
-
 
 int main(void) {
-	int a[] = {9,8,7,6,5,4,3,20,19,18,17,16,3,1};
-	int size = (sizeof(a)/sizeof(a[0]));
-	printf("Input array : \n");
-	printArray(a, size);
+	Node *root = createTree(20);
+	inorderTraversal(root);
 	printf("\n");
+	globalQueue = createQueue(20);
+	// printQueue(globalQueue);
+	enqueue(root, globalQueue);
+	BFS(root);
+	// Queue *q = createQueue(20);
+	// enqueue(201,q);
+	// enqueue(202,q);
+	// enqueue(203,q);
+	// enqueue(204,q);
+	// enqueue(205,q);
+	// printQueue(q);
 
-	quicksort(0, size - 1, a);
-	// partition(0,size-1,a);
-	printArray(a, size);
-
-	return 0;
 }
