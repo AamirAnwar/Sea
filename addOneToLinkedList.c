@@ -29,8 +29,6 @@ int addWithCarry(Node *head) {
 	if (!head) {return 1;}
 	head->value = head->value + addWithCarry(head->next);
 	int total = head->value;
-
-
 	head->value = head->value%10;
 	return total/10;
 }

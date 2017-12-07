@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+/*
+A program to create a Binary search tree and perform BFS on it.
+*/
+
 typedef struct Node {
 	int data;
 	struct Node *left;
@@ -20,18 +24,11 @@ Node* createNode(int data) {
 
 Node* createTree(int data) {
 	Node *root = createNode(data);
-	// srand(time(NULL));
-	// for (int i = 0; i < 10; ++i) {
-	// 	int r = rand()%100;
-	// 	insertInTree(root, r);
-	// }
-
 	insertInTree(root, 10);
 	insertInTree(root, 5);
 	insertInTree(root, 17);
 	insertInTree(root, 1);
 	insertInTree(root, 8);
-
 	insertInTree(root, 30);
 	insertInTree(root, 25);
 	insertInTree(root, 40);
@@ -39,7 +36,6 @@ Node* createTree(int data) {
 	insertInTree(root, 27);
 	insertInTree(root, 35);
 	insertInTree(root, 50);
-
 	return root;
 }
 
@@ -69,7 +65,6 @@ void inorderTraversal(Node *root) {
 }
 
 // Queue implementation
-
 typedef struct queue {
 	Node *array[400];
 	int capacity;
@@ -94,14 +89,10 @@ void enqueue(Node *data, Queue *q) {
 }
 
 void dequeue(Queue *q) {
-
-
 	if (q->front <= q->end) {
 		printf("Dequeued %d\n", q->array[q->front]->data);
 		q->front++;
 	}
-
-
 }
 
 void printQueue(Queue *q) {
@@ -143,15 +134,8 @@ int main(void) {
 	inorderTraversal(root);
 	printf("\n");
 	globalQueue = createQueue(20);
-	// printQueue(globalQueue);
 	enqueue(root, globalQueue);
 	BFS(root);
-	// Queue *q = createQueue(20);
-	// enqueue(201,q);
-	// enqueue(202,q);
-	// enqueue(203,q);
-	// enqueue(204,q);
-	// enqueue(205,q);
-	// printQueue(q);
+	
 
 }
