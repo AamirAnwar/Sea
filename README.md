@@ -1,6 +1,6 @@
 # Sea
 
-![alt text](https://github.com/AamirAnwar/Sea/resources/Logo.png "Logo")
+![alt text](https://github.com/AamirAnwar/Sea/blob/master/resources/Logo.png "Logo")
 
 A curated list of programs in C for the study of Data structures and Algorithms. 
 
