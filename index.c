@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+// Max function
+#define max(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
+
 
 // Binary Tree Node Structure
 typedef struct node {
@@ -26,6 +32,8 @@ int numberOfNodes(Node *root);
 Node* DSW(Node **root);
 Node* rotateLeft(Node *root);
 Node* rotateRight(Node *root);
+int diameter(Node *root);
+int maxHeight(Node *root);
 
 // Function definitions 
 
@@ -235,29 +243,49 @@ Node* DSW(Node **root) {
 
 }
 
+int maxHeight(Node *root) {
+	if (!root) {
+		return 0;
+	}
+	int leftHeight = maxHeight(root->left);
+	int rightHeight = maxHeight(root->right);
+	if (leftHeight > rightHeight) {
+		return leftHeight + 1;
+	}
+	else {
+		return rightHeight + 1;
+	}
+}
+
+int diameter(Node *root) {
+	if (!root) {
+		return 0;
+	}
+
+	int leftSubtreeHeight = maxHeight(root->left);
+	int rightSubtreeHeight = maxHeight(root->right);
+
+	int leftSubtreeDiameter = diameter(root->left);
+	int rightSubtreeDiameter = diameter(root->right);
+
+	return max(max(leftSubtreeDiameter, rightSubtreeDiameter), leftSubtreeHeight + rightSubtreeHeight + 1);
+}
+
+
+
 // Main 
 int main(void) {
-	int data[] = {50,30,100,10,40, 110,75};
+	// int data[] = {50,30,100,10,40, 110,75};
+	int data[] = {100, 200, 50, 20, 60, 10, 15, 55, 65, 70, 80};
 	int size = sizeof(data)/sizeof(data[0]);
 	printf("Hi there! i have %d elements\n", size);
 	Node *root = createBinaryTree(data, size);
-	// inorder(root);
-	postorder(root);
+	inorder(root);
 	printf("\n");
+	printf("Max height is %d \n", maxHeight(root));
 
-	// printf("Rotating root\n");
-	// root = rotateLeft(root);
-	// postorder(root);
-	// printf("\n");
-	// printf("Total number of nodes is %d\n", numberOfNodes(root));
+	printf("Diameter is %d\n", diameter(root));
 
-	// Morris Traversal
-	// createVine(&root);
-	// printf("Printing vine!\n");
-	// printVine(root);
-
-	root = DSW(&root);
-	postorder(root);
 
 
 
