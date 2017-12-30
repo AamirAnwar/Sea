@@ -274,20 +274,20 @@ int diameter(Node *root) {
 
 
 // Main 
-int main(void) {
-	// int data[] = {50,30,100,10,40, 110,75};
-	int data[] = {100, 200, 50, 20, 60, 10, 15, 55, 65, 70, 80};
-	int size = sizeof(data)/sizeof(data[0]);
-	printf("Hi there! i have %d elements\n", size);
-	Node *root = createBinaryTree(data, size);
-	inorder(root);
-	printf("\n");
-	printf("Max height is %d \n", maxHeight(root));
+// int main(void) {
+// 	// int data[] = {50,30,100,10,40, 110,75};
+// 	int data[] = {100, 200, 50, 20, 60, 10, 15, 55, 65, 70, 80};
+// 	int size = sizeof(data)/sizeof(data[0]);
+// 	printf("Hi there! i have %d elements\n", size);
+// 	Node *root = createBinaryTree(data, size);
+// 	inorder(root);
+// 	printf("\n");
+// 	printf("Max height is %d \n", maxHeight(root));
 
-	printf("Diameter is %d\n", diameter(root));
-
-
+// 	printf("Diameter is %d\n", diameter(root));
 
 
-	return 0;
-}
+
+
+// 	return 0;
+// }

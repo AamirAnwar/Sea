@@ -3,7 +3,7 @@
 #include <limits.h>
 int *counter;
 
-// This algorithm runs in O(n) time.
+
 Node* createTreeFromInorder(int *traversal, int size, int min, int max, Node *root) {
 
 	if ((*counter) >= size) {
