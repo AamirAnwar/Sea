@@ -1,8 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-
+// Quicksort algorithm. Sorting in O(n*log(n))
 
 void swap(int *x, int *y) {
 	int temp = *x;
