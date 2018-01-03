@@ -133,8 +133,6 @@ void recursiveReverse(Node **head) {
 int main(void) {
 	Node* head= createNode(17, NULL);
 	int i,j;
-	// scanf("%d\n%d", &i, &j);
-
 	createNode(16, head);
 	createNode(15, head);
 	createNode(14, head);
@@ -142,10 +140,6 @@ int main(void) {
 	createNode(12, head);
 	createNode(11, head);
 	sortList(head);
-
-	// printList(head);
-	// swapNode(i,j, head);
-	// printList(head);
 
 	return 0;
 }
